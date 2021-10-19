@@ -140,7 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="menus.cpp" />
+    <ClCompile Include="orders.cpp" />
+    <ClCompile Include="password.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="global.h" />

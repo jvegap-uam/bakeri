@@ -18,7 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="menus.cpp">
+    <ClCompile Include="orders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="password.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
