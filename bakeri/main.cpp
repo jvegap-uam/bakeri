@@ -4,6 +4,7 @@
 #include <iostream>
 #include "global.h"
 #include "tasks.h"
+#include <string>
 int main()
 {
 	system("cls");
@@ -24,13 +25,13 @@ void mainMenu() {
 
 	switch (opt) {
 	case 1:
-		//seeOrders();
+		seeOrder();
 		break;
 	case 2:
-		//addOrders();
+		addOrder();
 		break;
 	case 3:
-		//editOrders();
+		editOrder();
 		break;
 	default:
 		std::cout << "---------------------------------" << std::endl;

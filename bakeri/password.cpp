@@ -1,6 +1,7 @@
 #include<iostream>
 #include "global.h"
 #include "tasks.h"
+#include <string>
 
 using namespace std;
 void psswd() {
