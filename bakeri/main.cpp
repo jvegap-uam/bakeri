@@ -5,8 +5,11 @@
 #include "global.h"
 #include "tasks.h"
 #include <string>
+#include <ctime>
+
 int main()
 {
+	srand((unsigned)time(0));
 	system("cls");
 	psswd();
     return 0;

@@ -31,7 +31,6 @@ string createID() {
 }
 */
 void addOrder() {
-	count++;
 		orden[count].id = randNumber();
 		std::cout << "Nombre: "; std::cin.ignore();
 		std::cin.getline(orden[count].name, 51);
@@ -64,6 +63,7 @@ void addOrder() {
 		std::cin.getline(orden[count].pastel.sabor, 12);
 		std::cout << "Precio: ";
 		std::cin >> orden[count].precio;
+		count++;
 }
 
 void seeOrder() {
@@ -71,36 +71,44 @@ void seeOrder() {
 }
 
 void editOrder() {
-
+	int n = 0;
+	int tempID;
+	std::cout << "Ingrese la ID de la orden a editar: ";
+	std::cin >> tempID;
+	n = searchOrder(tempID);
 	std::cout << "Nombre: "; std::cin.ignore();
-	std::cin.getline(orden[count].name, 51);
+	std::cin.getline(orden[n].name, 51);
 	std::cout << "Apellido: ";  std::cin.ignore();
-	std::cin.getline(orden[count].apellido, 51);
+	std::cin.getline(orden[n].apellido, 51);
 	std::cout << "Telefono: ";
-	std::cin >> orden[count].numTel;
+	std::cin >> orden[n].numTel;
 	std::cout << "Pastel" << std::endl;
 	std::cout << "Peso: ";  std::cin.ignore();
-	std::cin >> orden[count].pastel.peso;
+	std::cin >> orden[n].pastel.peso;
 	std::cout << "Sabor: ";  std::cin.ignore();
-	std::cin.getline(orden[count].pastel.sabor, 20);
+	std::cin.getline(orden[n].pastel.sabor, 20);
 	std::cout << "Forma: ";  std::cin.ignore();
-	std::cin.getline(orden[count].pastel.forma, 20);
+	std::cin.getline(orden[n].pastel.forma, 20);
 	std::cout << "Tiene relleno (1 o 0): ";
-	std::cin >> orden[count].pastel.relleno;
-	if (orden[count].pastel.relleno) {
+	std::cin >> orden[n].pastel.relleno;
+	if (orden[n].pastel.relleno) {
 		std::cout << "Sabor del relleno: ";  std::cin.ignore();
-		std::cin.getline(orden[count].pastel.sabor, 20);
+		std::cin.getline(orden[n].pastel.sabor, 20);
 	}
 	std::cout << "Tiene decoracion (1 o 0): ";
-	std::cin >> orden[count].pastel.decoracion;
-	if (orden[count].pastel.decoracion) {
+	std::cin >> orden[n].pastel.decoracion;
+	if (orden[n].pastel.decoracion) {
 		std::cout << "Tipo de decoracion: ";  std::cin.ignore();
-		std::cin.getline(orden[count].pastel.sabor, 200);
+		std::cin.getline(orden[n].pastel.sabor, 200);
 	}
 	std::cout << "Fecha de la orden (ddmmyy): ";  std::cin.ignore();
-	std::cin.getline(orden[count].pastel.sabor, 12);
+	std::cin.getline(orden[n].pastel.sabor, 12);
 	std::cout << "Fecha de la entrega (ddmmyy): ";  std::cin.ignore();
-	std::cin.getline(orden[count].pastel.sabor, 12);
+	std::cin.getline(orden[n].pastel.sabor, 12);
 	std::cout << "Precio: ";
-	std::cin >> orden[count].precio;
+	std::cin >> orden[n].precio;
+}
+
+int searchOrder(int tempID) {
+
 }
