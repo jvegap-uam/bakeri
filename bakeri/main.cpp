@@ -16,6 +16,7 @@ int main()
 }
 
 void mainMenu() {
+	system("cls");
 	int opt = 0;
 	std::cout << "---------------------------------" << std::endl;
 	std::cout << "Base de Datos de Fontana's Bakery" << std::endl;

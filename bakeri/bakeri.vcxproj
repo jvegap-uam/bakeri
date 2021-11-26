@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="orders.cpp" />
-    <ClCompile Include="password.cpp" />
+    <ClCompile Include="misc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="global.h" />

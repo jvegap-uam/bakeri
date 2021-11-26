@@ -2,6 +2,8 @@
 #include "global.h"
 #include "tasks.h"
 #include <string>
+#include <time.h>
+#include <fstream>
 
 using namespace std;
 void psswd() {
@@ -50,4 +52,26 @@ void psswd() {
 			contador = contador + 1;
 		}
 	}
+}
+
+/*
+const std::string currentDateTime() {
+	time_t     now = time(0);
+	struct tm  tstruct;
+	char       buf[80];
+	tstruct = *localtime_s(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+	return buf;
+}
+*/
+
+int checkLines() {
+	int numLines = 0;
+	ifstream fileIn("data.txt");
+	string unused;
+	while (std::getline(fileIn, unused)) {
+		++numLines;
+	}
+	return numLines;
 }

@@ -22,5 +22,5 @@ struct Order {
 };
 
 extern struct Order orden[256];
-
-extern int count;
+extern struct Order sorted[256];
+extern int;
