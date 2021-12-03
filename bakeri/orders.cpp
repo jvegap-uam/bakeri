@@ -3,6 +3,7 @@
 #include "tasks.h"
 #include <string>
 #include <fstream>
+#include <algorithm>
 
 struct Order orden[256];
 struct Order temp[256];
@@ -64,9 +65,9 @@ void addOrder() {
 			std::cin.getline(orden[count].pastel.sabor, 200);
 		}
 	
-		std::cout << "Fecha de la orden (ddmmyy): ";  std::cin.ignore();
+		std::cout << "Fecha de la orden (yymmdd): ";  std::cin.ignore();
 		std::cin.getline(orden[count].pastel.sabor, 12);
-		std::cout << "Fecha de la entrega (ddmmyy): ";  std::cin.ignore();
+		std::cout << "Fecha de la entrega (yymmdd): ";  std::cin.ignore();
 		std::cin.getline(orden[count].pastel.sabor, 12);
 		std::cout << "Precio: ";
 		std::cin >> orden[count].precio;
@@ -95,6 +96,7 @@ void addOrder() {
 
 void seeOrder() {
 	int count = (checkLines()+1);
+	int min, aux, sortOpt;
 	std::ifstream file;
 	file.open("data	.txt");
 	system("cls");
@@ -118,22 +120,30 @@ void seeOrder() {
 	}
 
 	for (int i = 0; i < count; i++) {
-		sorted[i].id = orden[i].id;
-		strcpy(sorted[i].name, orden[i].name);
-		strcpy(sorted[i].apellido, orden[i].apellido);
-		sorted[i].numTel = orden[i].numTel;
-		sorted[i].pastel.peso = orden[i].pastel.peso;
-		strcpy(sorted[i].pastel.sabor, orden[i].pastel.sabor);
-		strcpy(sorted[i].pastel.forma, orden[i].pastel.forma);
-		sorted[i].pastel.relleno = orden[i].pastel.relleno;
-		//sorted[i].pastel.saborRelleno = orden[i].pastel.saborRelleno;
+
+		sorted[i] = orden[i];
+
+		//sorted[i].id = orden[i].id;
+		//strcpy_s(sorted[i].name, orden[i].name);
+		//strcpy_s(sorted[i].apellido, orden[i].apellido);
+		//sorted[i].numTel = orden[i].numTel;
+		//sorted[i].pastel.peso = orden[i].pastel.peso;
+		//strcpy_s(sorted[i].pastel.sabor, orden[i].pastel.sabor);
+		//strcpy_s(sorted[i].pastel.forma, orden[i].pastel.forma);
+		//sorted[i].pastel.relleno = orden[i].pastel.relleno;
+		//strcpy_s(sorted[i].pastel.saborRelleno, orden[i].pastel.saborRelleno);
 		//sorted[i].pastel.decoracion = orden[i].pastel.decoracion;
-		//sorted[i].pastel.detalleDecoracion = orden[i].pastel.detalleDecoracion;
-		//sorted[i].orderDate = orden[i].orderDate;
-		//sorted[i].endDate = orden[i].endDate;
+		//strcpy_s(sorted[i].pastel.detalleDecoracion, orden[i].pastel.detalleDecoracion);
+		//strcpy_s(sorted[i].orderDate, orden[i].orderDate);
+		//strcpy_s(sorted[i].endDate, orden[i].endDate);
 		//sorted[i].precio = orden[i].precio;
 		//sorted[i].completed = orden[i].completed;
 	}
+
+	orderSortMenu();
+	
+	printOrders();
+
 	file.close();
 	mainMenu();
 }
@@ -141,10 +151,8 @@ void seeOrder() {
 void editOrder() {
 	system("cls");
 	int n = 0;
-	int tempID;
-	std::cout << "Ingrese la ID de la orden a editar: ";
-	std::cin >> tempID;
-	n = searchOrder(tempID);
+	searchOrder();
+	editMenu();
 	std::cout << "Nombre: "; std::cin.ignore();
 	std::cin.getline(orden[n].name, 51);
 	std::cout << "Apellido: ";  std::cin.ignore();
@@ -179,11 +187,132 @@ void editOrder() {
 
 }
 
-int searchOrder(int tempID) {
-	int x=0;
-	int min, max;
+int searchOrder() {
+	int tempID;
+	int m = checkLines();
+	bool encontrado = 0;
+	int pos;
+
+	std::cout << "Ingrese dato que desea buscar: " << std::endl;
+	std::cin >> tempID;
+	for (int j = 0; j < m; j++) {
+		//Si el elemento de la posición actual del arreglo es similar a la clave de búsqueda, despliega mensaje de encontrado.
+		if (orden[j].id == tempID) {
+			//std::cout << "Se encontro " << clave << " en la posicion [" << j << "]" << std::endl;
+			encontrado = 1;
+			pos = j;
+			break;
+		}
+	}
+
+	//Si no se encontró la clave despliega el mensaje de no encontrado.
+	if (encontrado != 1) {
+		pos = -1;
+	}
+	return pos;
+}
 
 
+void sortByName() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (orden[j].name < orden[min].name) {
+				min = j;
+			}
+		}
+		aux = orden[i];
+		orden[i] = orden[min];
+		orden[min] = aux;
+	}
+}
 
-	return x;
+void sortByApellido() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (orden[j].apellido < orden[min].apellido) {
+				min = j;
+			}
+		}
+		aux = orden[i];
+		orden[i] = orden[min];
+		orden[min] = aux;
+	}
+}
+
+void sortByOrder() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (orden[j].orderDate < orden[min].orderDate) {
+				min = j;
+			}
+		}
+		aux = orden[i];
+		orden[i] = orden[min];
+		orden[min] = aux;
+	}
+}
+
+void sortByEntrega() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (orden[j].endDate < orden[min].endDate) {
+				min = j;
+			}
+		}
+		aux = orden[i];
+		orden[i] = orden[min];
+		orden[min] = aux;
+	}
+}
+
+void printOrders() {
+	int n = (checkLines()+1);
+	system("cls");
+	for (int i = 0; i < n; i++) {
+		std::cout << "----------------------------------------" << std::endl;
+		std::cout << "\t" << "ID de la orden: " << sorted[i].id << std::endl;
+		std::cout << "\t" << "Nombre del Cliente: " << sorted[i].name << std::endl;
+		std::cout << "\t" << "Apellido del Cliente: " << sorted[i].apellido << std::endl;
+		std::cout << "\t" << "Telefono del Cliente: " << sorted[i].numTel << std::endl;
+		std::cout << "\t" << "Peso del Pastel: " << sorted[i].pastel.peso << std::endl;
+		std::cout << "\t" << "Sabor del Pastel: " << sorted[i].pastel.sabor << std::endl;
+		std::cout << "\t" << "Forma del Pastel: " << sorted[i].pastel.forma << std::endl;
+		std::cout << "\t" << "Relleno del Pastel: " << sorted[i].pastel.relleno << std::endl;
+		std::cout << "\t" << "Sabor de Relleno del Pastel: " << sorted[i].pastel.saborRelleno << std::endl;
+		std::cout << "\t" << "Decoración del Pastel: " << sorted[i].pastel.decoracion << std::endl;
+		std::cout << "\t" << " Detalle de Decoración: " << sorted[i].pastel.detalleDecoracion << std::endl;
+		std::cout << "\t" << "Fecha de Orden: " << sorted[i].orderDate << std::endl;
+		std::cout << "\t" << "Fecha de Entrega: " << sorted[i].endDate << std::endl;
+		std::cout << "\t" << "Precio del Pastel: " << sorted[i].precio << std::endl;
+	}
+	system("pause");
+}
+
+void editMenu() {
+	int opt = 0;
+
+	std::cout << "----------------------------------------" << std::endl;
+	std::cout << "Aspectos a Editar:" << std::endl;
+	std::cout << "	1) Nombre del Cliente | " << std::endl;
+	std::cout << "	2) Apellido del Cliente | " << std::endl;
+
+	switch (opt) {
+
+	}
 }

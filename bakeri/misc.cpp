@@ -75,3 +75,27 @@ int checkLines() {
 	}
 	return numLines;
 }
+
+void orderSortMenu() {
+	int sortOpt;
+	std::cout << "Como desea ordenar las ordenes? " << std::endl;
+	std::cout << "	1) Por Nombre del Cliente\n	2) Por Apellido del Cliente\n";
+	std::cout << "	3) Por Fecha de Orden\n	4) Por Fecha de Entrega" << std::endl;
+	std::cin >> sortOpt;
+
+	switch (sortOpt) {
+	case 1:
+		sortByName();
+		break;
+	case 2:
+		sortByApellido();
+		break;
+	case 4:
+		sortByOrder();
+		break;
+	case 5:
+		sortByEntrega();
+
+
+	}
+}
