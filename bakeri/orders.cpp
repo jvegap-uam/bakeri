@@ -36,6 +36,8 @@ void addOrder() {
 	system("cls");
 	std::ofstream file;
 	file.open("data.txt");
+		std::cout << "----------------------------------------" << std::endl;
+		std::cout << "Ingrese los valores de la orden. " << std::endl;
 		orden[count].id = randNumber();
 		std::cout << "Nombre: "; std::cin.ignore();
 		std::cin.getline(orden[count].name, 51);
@@ -43,7 +45,6 @@ void addOrder() {
 		std::cin.getline(orden[count].apellido, 51);
 		std::cout << "Telefono: ";  
 		std::cin >> orden[count].numTel;
-		std::cout << "Pastel" << std::endl;
 		std::cout << "Peso: ";  std::cin.ignore();
 		std::cin >> orden[count].pastel.peso;
 		std::cout << "Sabor: ";  std::cin.ignore();
@@ -55,20 +56,20 @@ void addOrder() {
 		std::cin >> orden[count].pastel.relleno;
 		if (orden[count].pastel.relleno) {
 		std::cout << "Sabor del relleno: ";  std::cin.ignore();
-		std::cin.getline(orden[count].pastel.sabor, 20);
+		std::cin.getline(orden[count].pastel.saborRelleno, 20);
 		}
 		
 		std::cout << "Tiene decoracion (1 o 0): ";
 		std::cin >> orden[count].pastel.decoracion;
 		if (orden[count].pastel.decoracion) {
 		std::cout << "Tipo de decoracion: ";  std::cin.ignore();
-			std::cin.getline(orden[count].pastel.sabor, 200);
+			std::cin.getline(orden[count].pastel.detalleDecoracion, 200);
 		}
 	
 		std::cout << "Fecha de la orden (yymmdd): ";  std::cin.ignore();
-		std::cin.getline(orden[count].pastel.sabor, 12);
+		std::cin.getline(orden[count].orderDate, 12);
 		std::cout << "Fecha de la entrega (yymmdd): ";  std::cin.ignore();
-		std::cin.getline(orden[count].pastel.sabor, 12);
+		std::cin.getline(orden[count].endDate, 12);
 		std::cout << "Precio: ";
 		std::cin >> orden[count].precio;
 
@@ -151,39 +152,42 @@ void seeOrder() {
 void editOrder() {
 	system("cls");
 	int n = 0;
-	searchOrder();
-	editMenu();
+	n = searchOrder();
+	std::cout << "----------------------------------------" << std::endl;
+	std::cout << "Ingrese los valores a modificar. " << std::endl;
 	std::cout << "Nombre: "; std::cin.ignore();
-	std::cin.getline(orden[n].name, 51);
+	std::cin.getline(temp[n].name, 51);
 	std::cout << "Apellido: ";  std::cin.ignore();
-	std::cin.getline(orden[n].apellido, 51);
+	std::cin.getline(temp[n].apellido, 51);
 	std::cout << "Telefono: ";
-	std::cin >> orden[n].numTel;
-	std::cout << "Pastel" << std::endl;
+	std::cin >> temp[n].numTel;
 	std::cout << "Peso: ";  std::cin.ignore();
-	std::cin >> orden[n].pastel.peso;
+	std::cin >> temp[n].pastel.peso;
 	std::cout << "Sabor: ";  std::cin.ignore();
-	std::cin.getline(orden[n].pastel.sabor, 20);
+	std::cin.getline(temp[n].pastel.sabor, 20);
 	std::cout << "Forma: ";  std::cin.ignore();
-	std::cin.getline(orden[n].pastel.forma, 20);
+	std::cin.getline(temp[n].pastel.forma, 20);
+
 	std::cout << "Tiene relleno (1 o 0): ";
-	std::cin >> orden[n].pastel.relleno;
-	if (orden[n].pastel.relleno) {
+	std::cin >> temp[n].pastel.relleno;
+	if (temp[n].pastel.relleno) {
 		std::cout << "Sabor del relleno: ";  std::cin.ignore();
-		std::cin.getline(orden[n].pastel.sabor, 20);
+		std::cin.getline(temp[n].pastel.saborRelleno, 20);
 	}
+
 	std::cout << "Tiene decoracion (1 o 0): ";
-	std::cin >> orden[n].pastel.decoracion;
-	if (orden[n].pastel.decoracion) {
+	std::cin >> temp[n].pastel.decoracion;
+	if (temp[n].pastel.decoracion) {
 		std::cout << "Tipo de decoracion: ";  std::cin.ignore();
-		std::cin.getline(orden[n].pastel.sabor, 200);
+		std::cin.getline(temp[n].pastel.detalleDecoracion, 200);
 	}
-	std::cout << "Fecha de la orden (ddmmyy): ";  std::cin.ignore();
-	std::cin.getline(orden[n].pastel.sabor, 12);
-	std::cout << "Fecha de la entrega (ddmmyy): ";  std::cin.ignore();
-	std::cin.getline(orden[n].pastel.sabor, 12);
+
+	std::cout << "Fecha de la orden (yymmdd): ";  std::cin.ignore();
+	std::cin.getline(temp[n].orderDate, 12);
+	std::cout << "Fecha de la entrega (yymmdd): ";  std::cin.ignore();
+	std::cin.getline(temp[n].endDate, 12);
 	std::cout << "Precio: ";
-	std::cin >> orden[n].precio;
+	std::cin >> temp[n].precio;
 
 }
 
@@ -196,9 +200,7 @@ int searchOrder() {
 	std::cout << "Ingrese dato que desea buscar: " << std::endl;
 	std::cin >> tempID;
 	for (int j = 0; j < m; j++) {
-		//Si el elemento de la posición actual del arreglo es similar a la clave de búsqueda, despliega mensaje de encontrado.
 		if (orden[j].id == tempID) {
-			//std::cout << "Se encontro " << clave << " en la posicion [" << j << "]" << std::endl;
 			encontrado = 1;
 			pos = j;
 			break;
@@ -304,6 +306,7 @@ void printOrders() {
 	system("pause");
 }
 
+/*
 void editMenu() {
 	int opt = 0;
 
@@ -316,3 +319,4 @@ void editMenu() {
 
 	}
 }
+*/
