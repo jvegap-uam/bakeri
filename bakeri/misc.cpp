@@ -2,69 +2,13 @@
 #include "global.h"
 #include "tasks.h"
 #include <string>
-#include <time.h>
 #include <fstream>
+#include <stdlib.h>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
-void psswd() {
-	int contador;
-	int contador2;
-	string contrasena;
-	string usuario;
-	contador = 1;
-	contador2 = 1;
-	std::cout << "---------------------------------" << std::endl;
-	std::cout << "Base de Datos de Fontana's Bakery" << std::endl;
-	std::cout << "---------------------------------" << std::endl;
-	std::cout << std::endl;
-	while (contador <= 3) {
-		cout << "Usuario " << endl;
-		cin >> usuario;
-		if (usuario == "wal2021") {
-			contador = 4;
-			while (contador2 <= 3) {
-				cout << "Contrasena:" << endl;
-				cin >> contrasena;
-				if (contrasena == "wal2022") {
-					contador2 = 4;
-					cout << " " << endl;
-					system("cls");
-					mainMenu();
-				}
-				else {
-					if (contador2 == 3) {
-						cout << "Lo siento has fallado los 3 intentos" << endl;
-					}
-					else {
-						cout << "La contrasena es incorrecta" << endl;
-					}
-					contador2 = contador2 + 1;
-				}
-			}
-		}
-		else {
-			if (contador == 3) {
-				cout << "Lo siento has fallado los 3 intentos" << endl;
-			}
-			else {
-				cout << "Usuario no Encontrado" << endl;
-			}
-			contador = contador + 1;
-		}
-	}
-}
-
-/*
-const std::string currentDateTime() {
-	time_t     now = time(0);
-	struct tm  tstruct;
-	char       buf[80];
-	tstruct = *localtime_s(&now);
-	strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-
-	return buf;
-}
-*/
 
 int checkLines() {
 	int numLines = 0;
@@ -76,26 +20,143 @@ int checkLines() {
 	return numLines;
 }
 
-void orderSortMenu() {
-	int sortOpt;
-	std::cout << "Como desea ordenar las ordenes? " << std::endl;
-	std::cout << "	1) Por Nombre del Cliente\n	2) Por Apellido del Cliente\n";
-	std::cout << "	3) Por Fecha de Orden\n	4) Por Fecha de Entrega" << std::endl;
-	std::cin >> sortOpt;
-
-	switch (sortOpt) {
-	case 1:
-		sortByName();
-		break;
-	case 2:
-		sortByApellido();
-		break;
-	case 4:
-		sortByOrder();
-		break;
-	case 5:
-		sortByEntrega();
-
-
+int randNumber() {
+	std::ifstream file;
+	file.open("data.txt");
+	int count = (checkLines() + 1);
+	int i = 0;
+	while(!file.eof()) {
+		file >> orden[i].id;
+		i++;
+	}
+	const int maxNum = 900;
+	const int minNum = 100;
+	int ranNum = (rand() % (maxNum + 1 - minNum) + minNum);
+	for (int i = 0; i < count; i++) {
+		if (ranNum == orden[i].id) {
+			return randNumber();
+		}
+		else {
+			return ranNum;
+		}
 	}
 }
+
+int searchLine(string id) {
+	string str;
+	int line = 0;
+	ifstream file;
+	file.open("data.txt");
+	while (getline(file, str, '\t')){
+		if (str == id) {
+			return line;
+		}
+		line++;
+	}
+}
+
+long int getUnixTime(string date) {
+
+	istringstream in(date); // put the date in an istringstream
+
+	std::tm t{};
+	t.tm_isdst = -1; // let std::mktime try to figure out if DST is in effect
+
+	in >> std::get_time(&t, "%Y-%m-%d %H:%M"); // extract it into a std::tm
+
+	std::time_t timestamp = std::mktime(&t);   // get epoch
+
+	return timestamp;
+}
+
+int searchOrder() {
+	int tempID;
+	int m = checkLines();
+	bool encontrado = 0;
+	int pos;
+
+	cout << "Ingrese dato que desea buscar: " << endl;
+	cin >> tempID;
+	for (int j = 0; j < m; j++) {
+		if (temp[j].id == tempID) {
+			encontrado = 1;
+			pos = j;
+			break;
+		}
+	}
+
+	//Si no se encontró la clave despliega el mensaje de no encontrado.
+	if (encontrado != 1) {
+		pos = -1;
+	}
+	return pos;
+}
+
+void sortByName() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (sorted[j].name < sorted[min].name) {
+				min = j;
+			}
+		}
+		aux = sorted[i];
+		sorted[i] = sorted[min];
+		sorted[min] = aux;
+	}
+}
+
+void sortByApellido() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (sorted[j].apellido < sorted[min].apellido) {
+				min = j;
+			}
+		}
+		aux = sorted[i];
+		sorted[i] = sorted[min];
+		sorted[min] = aux;
+	}
+}
+
+void sortByOrder() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (sorted[j].orderTimestamp < sorted[min].orderTimestamp) {
+				min = j;
+			}
+		}
+		aux = sorted[i];
+		sorted[i] = sorted[min];
+		sorted[min] = aux;
+	}
+}
+
+void sortByEntrega() {
+	int count = checkLines();
+	int min;
+	struct Order aux;
+	for (int i = 0; i < count; i++) {
+		min = i;
+		for (int j = i + 1; j < 5; j++) {
+			if (sorted[j].endTimestamp < sorted[min].endTimestamp) {
+				min = j;
+			}
+		}
+		aux = sorted[i];
+		sorted[i] = sorted[min];
+		sorted[min] = aux;
+	}
+}
+

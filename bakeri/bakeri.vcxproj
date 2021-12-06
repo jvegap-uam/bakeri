@@ -139,9 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="functions.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="orders.cpp" />
     <ClCompile Include="misc.cpp" />
+    <ClCompile Include="menus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="global.h" />

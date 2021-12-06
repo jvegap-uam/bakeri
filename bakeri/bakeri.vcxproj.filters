@@ -18,10 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="orders.cpp">
+    <ClCompile Include="misc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="misc.cpp">
+    <ClCompile Include="menus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

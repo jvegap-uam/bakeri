@@ -1,47 +1,70 @@
-// bakeri.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
-#include "global.h"
-#include "tasks.h"
 #include <string>
 #include <ctime>
+#include <stdlib.h>
+#include <fstream>
+#include "global.h"
+#include "tasks.h"
 
-int main()
-{
+using namespace std;
+
+struct Order orden[256];
+struct Order temp[256];
+struct Order sorted[256];
+
+int main() {
 	srand((unsigned)time(0));
-	system("cls");
+	std::system("cls");
+	//startScreen();
+
 	psswd();
-    return 0;
+	return 0;
 }
+/*
+void startScreen() {
+	ifstream file;
+	file.open("startScreen.txt");
+	if (file.is_open()) {
+		cout << file.rdbuf();
+	}
+	else if (file.fail()) {
+		cout << "Archivo de pantalla de inicio no pudo ser abierto. Se procederá al inicio de sesion.";
+	}
+	std::system("pause");
+	psswd();
+}
+*/
+void psswd() {
+	int max = 3;
+	int x = 0;
+	int line1 = 0;
+	int line2 = 0;
+	string password, user;
+	string passwordInput, userInput;
+	bool found = 0;
+	ifstream f;
+	f.open("signin.txt");
 
-void mainMenu() {
-	system("cls");
-	int opt = 0;
-	std::cout << "---------------------------------" << std::endl;
-	std::cout << "Base de Datos de Fontana's Bakery" << std::endl;
-	std::cout << "---------------------------------" << std::endl;
-	std::cout << std::endl;
-	std::cout << "	1) Visualizar Ordenes." << std::endl;
-	std::cout << "	2) Agregar Ordenes." << std::endl;
-	std::cout << "	3) Editar Ordenes." << std::endl;
-	std::cout << "Opcion: "; std::cin >> opt;
+	while (!f.eof()) {	
+		f >> user >> password;
+	}
 
-	switch (opt) {
-	case 1:
-		seeOrder();
-		break;
-	case 2:
-		addOrder();
-		break;
-	case 3:
-		editOrder();
-		break;
-	default:
-		std::cout << "---------------------------------" << std::endl;
-		std::cout << "Ingrese un valor valido. (1-3)" << std::endl;
-		system("pause");
+	for (int i = 0; i < max; i++) {
+
+		cout << "Usuario: "; getline(cin, userInput);
+		cout << "Contrasena: ";  getline(cin, passwordInput);
+
+		if (user == userInput && password == passwordInput) {
+			found = 1;
+			break;
+		}
+	}
+
+	if (found) {
 		mainMenu();
-		break;
+	}
+	else {
+		cout << "Se ha alcanzado el numero maximo de ingresos erroneos, el programa se abortara." << endl;
+		exit(1);
 	}
 }
