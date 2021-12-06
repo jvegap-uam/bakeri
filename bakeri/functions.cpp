@@ -5,7 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <ios>
-#include<limits>
+#include <limits>
 
 using namespace std;
 
@@ -169,6 +169,33 @@ void editarOrder() {
 				cout << "	12) Estado de la orden" << endl;
 				cout << "Opcion: "; cin >> opt;
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				while (1)
+				{
+					if (cin.fail())
+					{
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						cout << "Haz ingresado un valor invalido." << endl;
+						std::system("pause");
+						std::system("cls");
+						cout << "Elija el elemento que va a editar: " << endl;
+						cout << "	01) Nombre" << endl;
+						cout << "	02) Apellido" << endl;
+						cout << "	03) Numero de Telefono" << endl;
+						cout << "	04) Peso del pastel" << endl;
+						cout << "	05) Forma del pastel" << endl;
+						cout << "	06) Sabor del pastel" << endl;
+						cout << "	07) Relleno del pastel" << endl;
+						cout << "	08) Decoracion del pastel" << endl;
+						cout << "	09) Fecha de la orden" << endl;
+						cout << "	10) Fecha de entrega de la orden" << endl;
+						cout << "	11) Precio de la orden" << endl;
+						cout << "	12) Estado de la orden" << endl;
+						cout << "Opcion: "; cin >> opt;
+					}
+					if (!cin.fail())
+						break;
+				}
 
 				switch (opt) {
 				case 1:
@@ -235,32 +262,15 @@ void editarOrder() {
 					cout << "Ingrese el nuevo estado de la orden (0,1): "; cin >> temp[i].completed;
 					orden[i].completed = temp[i].completed;
 					break;
+				default:
+					std::cout << "---------------------------------" << std::endl;
+					std::cout << "Ingrese un valor valido. (1-12)" << std::endl;
+					system("pause");
+					editarOrder();
+					break;
 				}
-
-				ficheroOut << orden[i].name << "\t";
-				ficheroOut << orden[i].apellido << "\t";
-				ficheroOut << orden[i].numTel << "\t";
-				ficheroOut << orden[i].pastel.peso << "\t";
-				ficheroOut << orden[i].pastel.sabor << "\t";
-				ficheroOut << orden[i].pastel.forma << "\t";
-				ficheroOut << orden[i].pastel.relleno << "\t";
-				ficheroOut << orden[i].pastel.saborRelleno << "\t";
-				ficheroOut << orden[i].pastel.decoracion << "\t";
-				ficheroOut << orden[i].pastel.detalleDecoracion << "\t";
-				ficheroOut << orden[i].orderDate << "\t";
-				ficheroOut << orden[i].endDate << "\t";
-				ficheroOut << orden[i].orderTimestamp << "\t";
-				ficheroOut << orden[i].endTimestamp << "\t";
-				ficheroOut << orden[i].precio << "\t";
-				ficheroOut << orden[i].completed << "\n";
-
-				mainMenu();
 			}
-			else {
-				editarOrder();
-			}
-		}
-		else {
+
 			ficheroOut << orden[i].name << "\t";
 			ficheroOut << orden[i].apellido << "\t";
 			ficheroOut << orden[i].numTel << "\t";
@@ -277,9 +287,14 @@ void editarOrder() {
 			ficheroOut << orden[i].endTimestamp << "\t";
 			ficheroOut << orden[i].precio << "\t";
 			ficheroOut << orden[i].completed << "\n";
+
+			mainMenu();
 		}
-		i++;
-	}
+		else {
+			editarOrder();
+		}
+	
+	i++;
 
 	ficheroIn.close();
 	ficheroOut.close();
@@ -287,16 +302,15 @@ void editarOrder() {
 	std::remove("data.txt");
 	std::rename("temp.txt", "data.txt");
 	mainMenu();
+	}
 }
 
 void seeOrder() {
-	int count = (checkLines() + 1);
-	int min, aux, sortOpt;
+	int x = checkLines() + 1;
 	ifstream file;
 	file.open("data	.txt");
 	system("cls");
-	int i = 0;
-	while (!file.eof()) {
+	for (int i = 0; i < x; i++ ) {
 		file >> orden[i].name;
 		file >> orden[i].apellido;
 		file >> orden[i].numTel;
@@ -316,8 +330,9 @@ void seeOrder() {
 		i++;
 	}
 
-	for (int i = 0; i < count; i++) {
-		sorted[i] = orden[i];
+	for (int j = 0; j < x; j++) {
+		sorted[j] = orden[j];
+		j++;
 	}
 
 	orderSortMenu();

@@ -60,7 +60,7 @@ void mainMenu() {
 
 void orderSortMenu() {
 	int opt;
-	cout << "Como desea ordenar las ordenes? " << std::endl;
+	cout << "Como desea ordenar las ordenes? " << endl;
 	cout << "1) Por Nombre del Cliente" << endl;
 	cout << "2) Por Apellido del Cliente" << endl;
 	cout << "3) Por Fecha de Orden "<< endl;
@@ -79,6 +79,7 @@ void orderSortMenu() {
 		break;
 	case 4:
 		sortByEntrega();
+		break;
 	case 5:
 		searchPrintOrder();
 	}
